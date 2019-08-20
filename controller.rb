@@ -2,6 +2,7 @@ require 'slim'
 require 'sinatra'
 require 'BCrypt'
 require_relative 'app.rb'
+enable :sessions
 
 get '/' do
     slim :index
