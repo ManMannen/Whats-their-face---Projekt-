@@ -3,7 +3,6 @@ require 'sinatra'
 require 'BCrypt'
 require_relative 'app.rb'
 
-
 get '/' do
     slim :index
 end
