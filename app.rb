@@ -30,17 +30,17 @@ include AppModule
             return msg
         end 
     end
-    configure do
-        set :unsecured_paths, ['/', '/login', '/new', '/create']
-    end
+    # configure do
+    #     set :unsecured_paths, ['/', '/login', '/new', '/create']
+    # end
 
-    before do
-        unless settings.unsecured_paths.include?(request.path)
-            if session[:user_id].nil?
-                redirect('/')
-            end
-        end
-    end
+    # before do
+    #     unless settings.unsecured_paths.include?(request.path)
+    #         if session[:user_id].nil?
+    #             redirect('/')
+    #         end
+    #     end
+    # end
 
     get("/") do
     slim(:login)
