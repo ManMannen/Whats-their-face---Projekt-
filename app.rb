@@ -2,56 +2,37 @@ enable :sessions
 
 class App < Sinatra::Base
 
-include AppModule
-    configure do
-        set :unsecured_paths, [ '/login', '/create',]
-     end
-
-    before do
-       unless settings.unsecured_paths.include?(request.path)
-            if session[:student_id].nil?
-              redirect('/')
-            end
-        end
-    end
-
     get("/") do
-    slim(:login)
+        slim(:login)
     end
 
-    get("/layout") do
-    slim(:layout)
+    post("/login") do
+      fullname = params["full_name"]
+      password = params["password"]
+      login(params)
+      redirect "/klasses.slim"
+    end
+
+    post("/create") do
+        first_name = params["first_name"]
+        last_name = params["last_name"]
+        password = params["password"]
+        create(params)
+        redirect "/klasses.slim"
+    end
+
+    get("/create") do
+        slim(:create)
     end
 
     #Ny sida för elever
     get("/new") do
-    slim(:new)
+        slim(:new)
     end
 
     #profil för folk på sidan
     get("/profile") do
-    slim(:profile)
-    end
-
-    get("/logout") do
-    slim(:logout)
-    end
-
-    post("/login") do
-        result = login(params)
-            redirect back
-        elsif result[:error_login]
-            session[:msg_login_failed] = result[:message_login]
-            redirect back
-        elsif
-            result[:no_info_error]
-            session[:no_info_error_msg] = result[:no_info_error_msg]
-            redirect back
-        else
-            session[:user_id] = result[:user_id]
-            session[:user] = result[:user]
-            redirect('/')
-        end
+        slim(:profile)
     end
 
 end
