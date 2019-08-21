@@ -10,15 +10,16 @@ module AppModule
         db = database()
         result = db.execute("SELECT username, password, user_id, authority, nickname FROM users WHERE username = ?", params["username"])
         if result.length > 0
-            if BCrypt::Password.new(result[0]["password"]) == params["password"] && result[0]["username"] == params["username"]
-                return{
-                    user_id: result[0]["user_id"],
-                    user: params["username"]
+            if BCrypt::Password.new(result[0]["password"]) == params["password"] && result[0]["first_name"] == params["first_name"]
+                {
+                student_id: result[0]["student_id"],
+                first_name: params["first_name"]
                 }
             else
                 flash[:notice_login] = "There was an error when logging in"
             end
         end
+        flash[:no_student] = "No student found"
     end
 
     def create(params)
@@ -37,7 +38,8 @@ module AppModule
             flash[:notice_create] = "There was an error creating the account"
         end
     end 
-
+    
+    
     def import_img_1A()
         Dir.glob('/public/img/1A/*.jpg') do |img|
             session[:images_1A] = images_1A.append(img)
@@ -94,11 +96,11 @@ module AppModule
 
     def change_username(params, user_id) 
         db = database()
-        db.execute("UPDATE users SET username = ? WHERE user_id = ?", params['change_username'], user_id)
+        db.execute("UPDATE users SET username = ? WHERE student_id = ?", params['change_username'], student_id)
     end
     
-    def change_password(params, user_id) 
+    def change_password(params, student_id) 
         db = database()
-        db.execute("UPDATE users SET password = ? WHERE user_id = ?", params['change_password'], user_id)
+        db.execute("UPDATE users SET password = ? WHERE student_id = ?", params['change_password'], student_id)
     end
 end
