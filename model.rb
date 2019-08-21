@@ -8,7 +8,9 @@ module AppModule
     
     def login(params)
         db = database()
-        result = db.execute("SELECT username, password, user_id, authority, nickname FROM users WHERE username = ?", params["username"])
+        first_name = params["fullname"].split[0]
+        last_name = params["fullname"].split[1]
+        result = db.execute("SELECT class, first_name, last_name, student_id, password, authority FROM users WHERE values (?,?)", first_name, last_name)
         if result.length > 0
             if BCrypt::Password.new(result[0]["password"]) == params["password"] && result[0]["first_name"] == params["first_name"]
                 {
@@ -24,18 +26,20 @@ module AppModule
 
     def create(params)
         db = database()
-        new_name = params["username"] 
+        first_name = params["first_name"] 
+        last_name = params["last_name"]
         new_password = params["password"]
         new_password_hash = BCrypt::Password.create(new_password)
-        db.execute("INSERT INTO users (username, password, authority, nickname) VALUES (?,?,?,?)", new_name, new_password_hash, 1)
-        result = db.execute("SELECT * FROM users")
-        if result > 0
-            return {
-            user_id: result[0]["user_id"],
-            user: params["username"]
-            }
-        else
-            flash[:notice_create] = "There was an error creating the account"
+        if(db.execute("SELECT first_name, last_name") > 0)
+            flash[:notice_create] = "There was an error creating the account"  
+        else 
+            db.execute("INSERT INTO users (first_name, last_name, password) VALUES (?,?,?)", first_name, last_name, new_password_hash)
+        #     result > 0
+        #     return {
+        #     user_id: result[0]["user_id"],
+        #     user: params["username"]
+        #     }
+        # else 
         end
     end 
     
