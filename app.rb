@@ -3,17 +3,17 @@ enable :sessions
 class App < Sinatra::Base
 
 include AppModule
-    # configure do
-    #     set :unsecured_paths, [ '/login', '/new', '/signup']
-    # end
+    configure do
+        set :unsecured_paths, [ '/login', '/create',]
+     end
 
-    # before do
-    #     unless settings.unsecured_paths.include?(request.path)
-    #         if session[:user_id].nil?
-    #             redirect('/')
-    #         end
-    #     end
-    # end
+    before do
+       unless settings.unsecured_paths.include?(request.path)
+            if session[:student_id].nil?
+              redirect('/')
+            end
+        end
+    end
 
     get("/") do
     slim(:login)
