@@ -3,35 +3,8 @@ enable :sessions
 class App < Sinatra::Base
 
 include AppModule
-    helpers do
-        def get_error_login()
-            msg = session[:msg_login_failed].dup
-            session[:msg_login_failed] = nil
-            return msg
-        end
-        def get_error_create()
-            msg = session[:msg_create_failed].dup
-            session[:msg_create_failed] = nil
-            return msg
-        end
-        def get_error_review()
-            msg = session[:msg_review_failed].dup
-            session[:msg_review_failed] = nil
-            return msg
-        end
-        def get_validate_error_login()
-            msg = session[:validate_login_error_msg].dup
-            session[:validate_login_error_msg] = nil
-            return msg
-        end
-        def get_no_info_error_login()
-            msg = session[:no_info_error_msg].dup
-            session[:no_info_error_msg] = nil
-            return msg
-        end 
-    end
     # configure do
-    #     set :unsecured_paths, ['/', '/login', '/new', '/create']
+    #     set :unsecured_paths, [ '/login', '/new', '/signup']
     # end
 
     # before do
@@ -66,8 +39,6 @@ include AppModule
 
     post("/login") do
         result = login(params)
-        if result[:validate_login_error]
-            session[:validate_login_error_msg] = result[:validate_login_error_msg]
             redirect back
         elsif result[:error_login]
             session[:msg_login_failed] = result[:message_login]
