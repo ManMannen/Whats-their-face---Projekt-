@@ -45,60 +45,30 @@ module AppModule
     else
         flash[:notice_create] = "There was an error creating the account"
     end 
-    
-    
-    def import_img_1A()
-        Dir.glob('/public/img/1A/*.jpg') do |img|
-            next if img = ".." || img = "."
-            images_1A = []
-            session[:images_1A] = images_1A.append(img)
-        end
-    end
 
-    def import_img_2A()
-        Dir.glob('/public/img/2A/*.jpg') do |img|
-            session[:images_2A] = images_2A.append(img)
-        end
-    end
-
-    def import_img_3A()
-        Dir.glob('/public/img/3A/*.jpg') do |img|
-            session[:images_3A] = images_3A.append(img)
-        end
-    end
-
-    def insert_img_to_db(student_id) 
-        session[:images_1A].each do |query|
-        query = <<-SQL 
-        INSERT INTO images
-        img, student_id
-        VALUES ?,?
-        query, student_id
-        db.execute(query, session[:student_id])
-        SQL
-    end 
-
-    def insert_img_to_db(student_id) 
-        session[:images_2A].each do |query|
-        query = <<-SQL 
-        INSERT INTO images
-        img, student_id
-        VALUES ?,?
-        query, student_id
-        db.execute(query, session[:student_id])
-        SQL
-    end 
-
-    def insert_img_to_db(student_id) 
+    def insert_img_to_db(studen) 
+        db = database()
         session[:images_3A].each do |query|
-        query = <<-SQL 
+        request = <<-SQL 
         INSERT INTO images
         img, student_id
         VALUES ?,?
         query, student_id
-        db.execute(query, session[:student_id])
+        db.execute(query)
         SQL
     end 
+
+    def sort_by_class()
+    db = database()
+    query = <<-SQL
+    SELECT id FROM
+    students
+    WHERE class = ?
+    params[]
+    SQL
+
+
+    
 
 
     def change_username(params, student_id) 
@@ -110,5 +80,7 @@ module AppModule
         db = database()
         db.execute("UPDATE users SET password = ? WHERE student_id = ?", params['change_password'], student_id)
     end
+
+
 end 
 
