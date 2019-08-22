@@ -44,23 +44,6 @@
         end
     end
 
-
-
-
-
-        
-
-    
-
-
-
-
-
-
-
-
-
-
     def change_username(params, student_id) 
         database()
         db.execute("UPDATE users SET username = ? WHERE teacher_id = ?", params['change_username'], teacher_id)

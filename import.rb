@@ -1,25 +1,30 @@
 def import()
-    Dir.glob("import/*.jpg") do |img|
+    
+    Dir.glob("public/img/import/*.jpg") do |img|
         split_info = img.split(" ") #Splittar upp informationen från bilden
+        klass = split_info[0][-2..-1]
+        last_name = split_info[2][0..-4]
         db = database()
         db.execute(
         "INSERT INTO
         students
-        (klass, first_name, last_name)
+        (class, first_name, last_name)
         Values (?,?,?)",
-        split_info[0], split_info[1], split_info[2]
+        klass, split_info[1], last_name
         ) #Skickar in informationen från bild till Server
         result = db.execute("
-        SELECT MAX student_id
+        SELECT MAX(student_id)
         FROM 
         students
         ") # Hittar senaste student_id
-        begin
-            File.exist?("/import")
-                FileUtils.mv("img/import, img/class")
-        rescue 
+        
+        img_name = File.rename(img, "#{result[0].MAX(student_id)}" + ".jpg")
+        byebug
+        if File.exist?("public/img/import")
+            FileUtils.mv("public/img/import/#{img_name}", "public/img/class")
+        else
             "The file couldn't be moved"
         end
-        return result, session[:done_img] = File.rename(img, "#{result}" + ".jpg") # Byter namn till senaste student_id
+        return result, img_name # Byter namn till senaste student_id
     end
 end
