@@ -3,6 +3,7 @@
     def database()
         db = SQLite3::Database.new("db/db.db")
         db.results_as_hash = true
+        db
     end
     
     def login(params)
@@ -33,7 +34,7 @@
         if result > 0
             flash[:notice_create] = "There was an error creating the account"
         else
-            db.execute("INSERT INTO teachers (first_name, last_name, password) VALUES (?,?,?,?)", first_name, last_name, password_hash)
+            db.execute("INSERT INTO teachers (first_name, last_name, password) VALUES (?,?,?)", first_name, last_name, password_hash)
         end
     end
 
