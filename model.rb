@@ -14,7 +14,7 @@
         if result.length > 0
             if BCrypt::Password.new(result[0]["password"]) == params["password"] && result[0]["first_name"] == params["first_name"]
                 {
-                student_id: result[0]["student_id"],
+                teacher_id: result[0]["teacher_id"],
                 first_name: params["first_name"]
                 }
             else
@@ -35,13 +35,16 @@
     def print_students()
         Dir.glob("img/class") do
             database()
-            result = db.execute("
+            result_info = db.execute("
             SELECT * 
             from students 
-            WHERE student_id = ?"
+            WHERE student_id = ?",
             result.to_i)
+            return result_info, session[:done_img]
         end
     end
+
+
 
 
 
@@ -60,10 +63,10 @@
 
     def change_username(params, student_id) 
         database()
-        db.execute("UPDATE users SET username = ? WHERE student_id = ?", params['change_username'], student_id)
+        db.execute("UPDATE users SET username = ? WHERE teacher_id = ?", params['change_username'], teacher_id)
     end
     
     def change_password(params, student_id) 
         db = database()
-        db.execute("UPDATE users SET password = ? WHERE student_id = ?", params['change_password'], student_id)
+        db.execute("UPDATE users SET password = ? WHERE teacher_id = ?", params['change_password'], teacher_id)
     end

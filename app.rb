@@ -40,7 +40,7 @@ class App < Sinatra::Base
     end
 
     post("/show_students") do
-    print_students()
     redirect "/show_students"
+    end
 end
 
