@@ -10,7 +10,7 @@ class App < Sinatra::Base
       fullname = params["full_name"]
       password = params["password"]
       login(params)
-      redirect "/klasses.slim"
+      redirect("/klasses") 
     end
 
     post("/register") do
@@ -18,7 +18,11 @@ class App < Sinatra::Base
         last_name = params["last_name"]
         password = params["password"]
         create(params)
-        redirect "/klasses.slim"
+        redirect("/klasses") 
+    end
+
+    get("/klasses") do
+        slim(:klasses)
     end
 
     get("/create") do

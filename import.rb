@@ -23,6 +23,6 @@ def import()
         rescue 
             "The file couldn't be moved"
         end
-        File.rename(img, "#{result} + ".jpg"") --# Byter namn till senaste student_id
+        File.rename(img, "#{result}" + ".jpg") # Byter namn till senaste student_id
     end
 end
