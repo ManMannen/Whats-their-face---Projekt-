@@ -7,8 +7,8 @@
     end
     
     def login(params)
-        first_name = params["fullname"].spilt[0]
-        last_name = params["fullname"].split[1]
+        first_name = params["full_name"].split[0]
+        last_name = params["full_name"].split[1]
         db = database()
         result = db.execute("SELECT * FROM teachers WHERE first_name = ?", params["first_name"])
         if result.length > 0

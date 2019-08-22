@@ -15,15 +15,19 @@ class App < Sinatra::Base
         redirect "/klasses"
     end
 
-    get("/klasses/1A") do
+    get("/klasses") do
+        slim(:klasses)
+    end
+
+    get("/klasses/1A.slim") do
         slim(:a1)
     end
 
-    get("/klasses/2A") do
+    get("/klasses/2A.slim") do
         slim(:a2)
     end
 
-    get("/klasses/3A") do
+    get("/klasses/3A.slim") do
         slim(:a3)
     end
 
