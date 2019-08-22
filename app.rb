@@ -13,7 +13,7 @@ class App < Sinatra::Base
       redirect "/klasses.slim"
     end
 
-    post("/create") do
+    post("/register") do
         first_name = params["first_name"]
         last_name = params["last_name"]
         password = params["password"]
