@@ -1,6 +1,5 @@
-enable :sessions
-
 class App < Sinatra::Base
+    enable :sessions
 
     get("/") do
         slim(:login)
@@ -8,16 +7,12 @@ class App < Sinatra::Base
 
     post("/login") do
       login(params)
-      redirect("/klasses") 
+      redirect "/klasses"
     end
 
     post("/register") do
         create(params)
-        redirect("/klasses") 
-    end
-
-    get("/klasses") do
-        slim(:klasses)
+        redirect "/klasses"
     end
 
     get("/klasses/1A") do

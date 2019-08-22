@@ -10,12 +10,9 @@ def import()
         split_info[0], split_info[1], split_info[2]
         ) #Skickar in informationen från bild till Server
         result = db.execute("
-        SELECT student_id
+        SELECT MAX student_id
         FROM 
         students
-        WHERE 
-        student_id = (SELECT MAX(student_id) 
-        FROM students)
         ") # Hittar senaste student_id
         begin
             File.exist?("/import")
