@@ -29,20 +29,44 @@
         last_name = params["last_name"]
         password = params["password"]
         password_hash = BCrypt::Password.create(password)
-        result = db.execute("SELECT * FROM teachers")
-        if result > 0
-            flash[:notice_create] = "There was an error creating the account"
-        else
-            db.execute("INSERT INTO teachers (first_name, last_name, password) VALUES (?,?,?)", first_name, last_name, password_hash)
+        db.execute("INSERT INTO teachers (first_name, last_name, password) VALUES (?,?,?)", first_name, last_name, password_hash)
+    end
+
+    def print_students()
+        Dir.glob("img/class") do
+            database()
+            result_info = db.execute("
+            SELECT * 
+            from students 
+            WHERE student_id = ?",
+            result.to_i)
+            return result_info, session[:done_img]
         end
     end
 
-    def change_username(params, teacher_id) 
-        db = database()
-        db.execute("UPDATE teachers SET first_name = ? WHERE teacher_id = ?", params['change_username'], teacher_id)
+
+
+
+
+        
+
+    
+
+
+
+
+
+
+
+
+
+
+    def change_username(params, student_id) 
+        database()
+        db.execute("UPDATE users SET username = ? WHERE teacher_id = ?", params['change_username'], teacher_id)
     end
     
     def change_password(params, teacher_id) 
         db = database()
-        db.execute("UPDATE teacher SET password = ? WHERE teacher_id = ?", params['change_password'], teacher_id)
+        db.execute("UPDATE users SET password = ? WHERE teacher_id = ?", params['change_password'], teacher_id)
     end

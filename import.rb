@@ -20,6 +20,6 @@ def import()
         rescue 
             "The file couldn't be moved"
         end
-        File.rename(img, "#{result}" + ".jpg") # Byter namn till senaste student_id
+        return result, session[:done_img] = File.rename(img, "#{result}" + ".jpg") # Byter namn till senaste student_id
     end
 end
