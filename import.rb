@@ -13,9 +13,12 @@ def import()
         klass, split_info[1], last_name
         ) #Skickar in informationen från bild till Server
         result = db.execute("
-        SELECT MAX(student_id)
+        SELECT student_id
         FROM 
         students
+        WHERE 
+        student_id = SELECT MAX(student_id) 
+        from students
         ") # Hittar senaste student_id
         
         img_name = File.rename(img, "#{result[0].MAX(student_id)}" + ".jpg")
