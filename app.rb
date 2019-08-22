@@ -14,6 +14,22 @@ class App < Sinatra::Base
         slim(:new)
     end
 
+    get("/klasses") do
+        slim(:klasses)
+    end
+
+    get("/klasses/1A.slim") do
+        slim(:a1)
+    end
+
+    get("/klasses/2A.slim") do
+        slim(:a2)
+    end
+
+    get("/klasses/3A.slim") do
+        slim(:a3)
+    end
+
     #profil för folk på sidan
     get("/profile") do
         slim(:profile)
