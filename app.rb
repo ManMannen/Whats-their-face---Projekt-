@@ -1,8 +1,11 @@
 class App < Sinatra::Base
     enable :sessions
 
-    get("/") do
+    every 1.second do
         import()
+    end
+
+    get("/") do
         slim(:login)
     end
 
