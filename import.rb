@@ -22,7 +22,7 @@ def import()
         img_name = File.rename(img, new_name)
         if File.exist?("public/img/import")
             byebug
-            FileUtils.move "/public/img/import/#{new_name}", "/public/img/class/#{klass}/#{new_name}"
+            FileUtils.move "#{new_name}", "/public/img/class/#{klass}/"
         else
             "The file couldn't be moved"
         end
