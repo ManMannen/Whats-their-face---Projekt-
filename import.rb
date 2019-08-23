@@ -19,12 +19,14 @@ def import()
         student_id = (SELECT MAX(student_id) 
         FROM
         students)")
-        img_name = File.rename(img, "#{result[0]["student_id"]}" + ".jpg")
-        if File.exist?("public/img/import")
-            FileUtils.mv("public/img/import/#{img_name}", "public/img/class/#{klass")
+        new_name = "#{result[0]["student_id"]}" + ".jpg"    
+        img_name = File.rename(img, new_name)
+
+        if Dir.exist?("public/img/import")
+            FileUtils.mv "#{new_name}", "public/img/class/#{klass}"
         else
             "The file couldn't be moved"
         end
-        return result, img_name # Byter namn till senaste student_id
+        return result, img_name
     end
 end
