@@ -1,5 +1,4 @@
 def import()
-    
     Dir.glob("public/img/import/*.jpg") do |img|
         split_info = img.split(" ") #Splittar upp informationen från bilden
         klass = split_info[0][-2..-1]
@@ -17,14 +16,12 @@ def import()
         FROM 
         students
         WHERE 
-        student_id = SELECT MAX(student_id) 
-        from students
-        ") # Hittar senaste student_id
-        
-        img_name = File.rename(img, "#{result[0].MAX(student_id)}" + ".jpg")
-        byebug
+        student_id = (SELECT MAX(student_id) 
+        FROM
+        students)")
+        img_name = File.rename(img, "#{result[0]["student_id"]}" + ".jpg")
         if File.exist?("public/img/import")
-            FileUtils.mv("public/img/import/#{img_name}", "public/img/class")
+            FileUtils.mv("public/img/import/#{img_name}", "public/img/class/#{klass")
         else
             "The file couldn't be moved"
         end

@@ -10,11 +10,6 @@ class App < Sinatra::Base
         slim(:create)
     end
 
-    #Ny sida för elever
-    get("/new") do
-        slim(:new)
-    end
-
     get("/klasses") do
         slim(:klasses)
     end
