@@ -15,7 +15,6 @@ class App < Sinatra::Base
     end
 
     get("/klasses/1A.slim") do
-        #funktion som hämtar baserat på klass
         students = print_class("1A")
         slim(:a1, locals:{students: students})
     end

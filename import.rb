@@ -2,7 +2,7 @@ def import()
     Dir.glob("public/img/import/*.jpg") do |img|
         split_info = img.split(" ") #Splittar upp informationen från bilden
         klass = split_info[0][-2..-1]
-        last_name = split_info[2][0..-4]
+        last_name = split_info[2][0..-5]
         db = database()
         db.execute(
         "INSERT INTO
