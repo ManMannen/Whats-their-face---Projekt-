@@ -32,23 +32,21 @@
         db.execute("INSERT INTO teachers (first_name, last_name, password) VALUES (?,?,?)", first_name, last_name, password_hash)
     end
 
-    def print_students()
-        Dir.glob("img/class") do
-            database()
-            result_info = db.execute("
-            SELECT * 
-            from students 
-            WHERE student_id = ?",
-            result.to_i)
-            return result_info, session[:done_img]
-        end
+    def print_class(klass)
+        db = database()
+        result_class = db.execute("
+        SELECT * 
+        from students 
+        WHERE class = ?",
+        klass)
+        return result_class
     end
 
     def change_username(params, student_id) 
         database()
         db.execute("UPDATE users SET username = ? WHERE teacher_id = ?", params['change_username'], teacher_id)
     end
-    
+     
     def change_password(params, teacher_id) 
         db = database()
         db.execute("UPDATE users SET password = ? WHERE teacher_id = ?", params['change_password'], teacher_id)

@@ -15,15 +15,21 @@ class App < Sinatra::Base
     end
 
     get("/klasses/1A.slim") do
-        slim(:a1)
+        #funktion som hämtar baserat på klass
+        students = print_class("1A")
+        slim(:a1, locals:{students: students})
     end
 
     get("/klasses/2A.slim") do
-        slim(:a2)
+        students = print_class("2A")
+        slim(:a2, locals:{students: students})
+       
     end
 
     get("/klasses/3A.slim") do
-        slim(:a3)
+        students = print_class("3A")
+        slim(:a3, locals:{students: students})
+       
     end
 
     #profil för folk på sidan
@@ -44,9 +50,6 @@ class App < Sinatra::Base
     end
   
     post("/register") do
-        first_name = params["first_name"]
-        last_name = params["last_name"]
-        password = params["password"]
         create(params)
         redirect "/klasses"
     end
